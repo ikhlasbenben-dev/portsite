@@ -12,6 +12,7 @@ $navLinks = [
 ];
 
 // ---------- ATELIERS ----------
+<<<<<<< HEAD
 $ateliers = [
     [
         'title'     => 'Atelier 1',
@@ -43,6 +44,60 @@ $ateliers = [
         'doc_url'   => 'Atelier%204.pdf',
         'doc_label' => 'Voir Document',
         'repo_url'  => 'YOUR_GITHUB_LINK_4',
+=======
+// Each atelier can contain photo folders, a website URL, or both.
+$ateliers = [
+    1 => [
+        'title' => 'Atelier 1',
+        'desc' => 'Atelier 1 — Document Word',
+        'doc_url' => 'Atelier%201.pdf',
+        'doc_label' => 'Voir Document',
+        'repo_url' => '',
+        'folders' => ['Dossier 2', 'Dossier 3 (AdvancedEventSolution)'],
+    ],
+    2 => [
+        'title' => 'Atelier 2',
+        'desc' => 'Atelier 2 — Projet Deal',
+        'doc_url' => 'Doc1.pdf',
+        'doc_label' => 'Voir Document',
+        'jira_url' => 'https://ikhlasbenben0709.atlassian.net/jira/software/projects/DEAL/boards/36/backlog',
+        'figma_url' => 'https://www.figma.com/design/zwM3FU6erOokjjrCST4mK2/Deal?node-id=0-1&p=f&t=cffMicxRlI8ZxmZu-0',
+        'folders' => ['Partie 1', 'Partie 2'],
+    ],
+    3 => [
+        'title' => 'Atelier 3',
+        'desc' => 'Atelier 3 — Document Word',
+        'doc_url' => 'Atelier%203.pdf',
+        'doc_label' => 'Voir Document',
+        'repo_url' => '',
+        'folders' => [''],
+    ],
+    4 => [
+        'title' => 'Atelier 4',
+        'desc' => 'Atelier 4 — Document Word',
+        'doc_url' => 'Atelier%204.pdf',
+        'doc_label' => 'Voir Document',
+        'repo_url' => '',
+        'site_url' => 'https://dealappamallechhab.vercel.app/',
+        'site_label' => 'Site Web Deal',
+    ],
+    5 => [
+        'title' => 'Atelier 5',
+        'desc' => 'Atelier 5',
+        'doc_url' => 'Atelier%205.pdf',
+        'doc_label' => 'Voir Document',
+        'folders' => ['Partie 2', 'Partie 3'],
+    ],
+    6 => [
+        'title' => 'Atelier 6',
+        'desc' => 'Atelier 6',
+        'site_button_pending' => true,
+    ],
+    7 => [
+        'title' => 'Atelier 7',
+        'desc' => 'Atelier 7',
+        'site_button_pending' => true,
+>>>>>>> 6c961ba (Update website)
     ],
 ];
 
@@ -50,6 +105,52 @@ $ateliers = [
 function e(string $value): string
 {
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+}
+
+function atelierSlug(string $text): string
+{
+    $slug = strtolower(trim($text));
+    $slug = preg_replace('/[^a-z0-9]+/i', '-', $slug);
+    return trim($slug, '-') ?: 'photos';
+}
+
+/** Render a photo-gallery button and the gallery it controls. */
+function renderGalleryButton(string $label, string $folder, string $id): void
+{
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+    $files = glob($folder . '/*') ?: [];
+    $images = array_values(array_filter($files, static function ($file) use ($allowedExtensions) {
+        return is_file($file)
+            && in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), $allowedExtensions, true);
+    }));
+    natsort($images);
+
+    $imageItems = [];
+    $publicPath = realpath(__DIR__ . '/public');
+    foreach ($images as $image) {
+        $realImage = realpath($image);
+        if ($publicPath && $realImage && strpos($realImage, $publicPath . DIRECTORY_SEPARATOR) === 0) {
+            $relativePath = substr($realImage, strlen($publicPath) + 1);
+            $imageItems[] = '/' . str_replace(DIRECTORY_SEPARATOR, '/', $relativePath);
+        }
+    }
+    ?>
+    <button type="button" class="atelier-button" aria-expanded="false"
+        aria-controls="<?= e($id) ?>" onclick="toggleGallery(this)">
+        <?= e($label) ?> (<?= count($imageItems) ?>)
+    </button>
+    <div class="atelier-gallery" id="<?= e($id) ?>" hidden>
+        <?php if ($imageItems): ?>
+            <?php foreach ($imageItems as $src): ?>
+                <a href="<?= e($src) ?>" target="_blank" rel="noopener">
+                    <img src="<?= e($src) ?>" alt="<?= e($label) ?>" loading="lazy">
+                </a>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Aucune photo trouvée dans ce dossier.</p>
+        <?php endif; ?>
+    </div>
+    <?php
 }
 ?>
 
@@ -272,6 +373,73 @@ function e(string $value): string
             color: white;
         }
 
+        .project-links .pending-site-button {
+            font: inherit;
+            font-size: 13px;
+            color: var(--deep-brown);
+            font-weight: 600;
+            padding: 5px 15px;
+            border: 1px solid var(--deep-brown);
+            border-radius: 20px;
+            background: transparent;
+        }
+
+        .project-links .atelier-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font: inherit;
+            font-size: 13px;
+            color: var(--deep-brown);
+            font-weight: 600;
+            padding: 5px 15px;
+            border: 1px solid var(--deep-brown);
+            border-radius: 20px;
+            background: transparent;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .project-links .atelier-button:hover {
+            background: var(--deep-brown);
+            color: white;
+        }
+
+        .atelier-gallery {
+            display: flex;
+            flex-basis: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .atelier-gallery[hidden] {
+            display: none;
+        }
+
+        .atelier-gallery a,
+        .atelier-gallery a:hover,
+        .atelier-gallery a:focus-visible {
+            padding: 0;
+            border: 0;
+            background: transparent;
+            transform: none;
+        }
+
+        .atelier-gallery img {
+            display: block;
+            width: 130px;
+            height: 95px;
+            border: 1px solid var(--accent-pink);
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .atelier-gallery p {
+            color: var(--text-muted);
+        }
+
         /* ABOUT + CONTACT */
         #about,
         #contact {
@@ -378,7 +546,11 @@ function e(string $value): string
 
         <div class="projects-grid">
 
+<<<<<<< HEAD
             <?php foreach ($ateliers as $atelier): ?>
+=======
+            <?php foreach ($ateliers as $number => $atelier): ?>
+>>>>>>> 6c961ba (Update website)
 
                 <div class="project-card reveal">
 
@@ -388,7 +560,11 @@ function e(string $value): string
 
                     <div class="project-links">
 
+<<<<<<< HEAD
                         <?php if ($atelier['doc_url'] !== ''): ?>
+=======
+                        <?php if (!empty($atelier['doc_url'])): ?>
+>>>>>>> 6c961ba (Update website)
                             <a href="<?= e($atelier['doc_url']) ?>"
                                target="_blank"
                                rel="noopener">
@@ -396,7 +572,11 @@ function e(string $value): string
                             </a>
                         <?php endif; ?>
 
+<<<<<<< HEAD
                         <?php if ($atelier['repo_url'] !== ''): ?>
+=======
+                        <?php if (!empty($atelier['repo_url'])): ?>
+>>>>>>> 6c961ba (Update website)
                             <a href="<?= e($atelier['repo_url']) ?>"
                                target="_blank"
                                rel="noopener">
@@ -404,6 +584,31 @@ function e(string $value): string
                             </a>
                         <?php endif; ?>
 
+<<<<<<< HEAD
+=======
+                        <?php foreach (['jira_url' => 'Voir Jira', 'figma_url' => 'Voir Figma', 'site_url' => ($atelier['site_label'] ?? 'Voir site'), 'url' => 'Visiter le site ↗'] as $urlKey => $urlLabel): ?>
+                            <?php if (!empty($atelier[$urlKey])): ?>
+                                <a href="<?= e($atelier[$urlKey]) ?>" target="_blank" rel="noopener">
+                                    <?= e($urlKey === 'url' ? ($atelier['label'] ?? $urlLabel) : $urlLabel) ?>
+                                </a>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+
+                        <?php if (!empty($atelier['site_button_pending'])): ?>
+                            <button type="button" class="pending-site-button" disabled>Voir site</button>
+                        <?php endif; ?>
+
+                        <?php foreach (($atelier['folders'] ?? []) as $folderName): ?>
+                            <?php
+                                $label = $folderName !== '' ? $folderName : 'Photos';
+                                $folder = __DIR__ . '/public/images/ateliers/Atelier ' . (int) $number
+                                    . ($folderName !== '' ? '/' . $folderName : '');
+                                $galleryId = 'gallery-' . (int) $number . '-' . atelierSlug($label);
+                                renderGalleryButton($label, $folder, $galleryId);
+                            ?>
+                        <?php endforeach; ?>
+
+>>>>>>> 6c961ba (Update website)
                     </div>
 
                 </div>
@@ -453,6 +658,15 @@ function e(string $value): string
 
     <!-- JAVASCRIPT -->
     <script>
+        function toggleGallery(button) {
+            var galleryId = button.getAttribute("aria-controls");
+            var gallery = document.getElementById(galleryId);
+            var isOpen = button.getAttribute("aria-expanded") === "true";
+
+            button.setAttribute("aria-expanded", String(!isOpen));
+            gallery.hidden = isOpen;
+        }
+
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
 
@@ -472,4 +686,8 @@ function e(string $value): string
     </script>
 
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 6c961ba (Update website)
