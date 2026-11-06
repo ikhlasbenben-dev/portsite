@@ -11,35 +11,38 @@ $navLinks = [
     '#contact'  => 'Contact',
 ];
 
-// Each atelier: title, description, and optional links (leave '' to hide a button)
+// ---------- ATELIERS ----------
 $ateliers = [
     [
         'title'     => 'Atelier 1',
         'desc'      => 'Atelier 1 — Document Word',
-        'doc_url'   => 'Atelier 1.pdf',
+        'doc_url'   => 'Atelier%201.pdf',
         'doc_label' => 'Voir Document',
-        'repo_url'  => '',
+        'repo_url'  => 'YOUR_GITHUB_LINK_1',
     ],
     [
         'title'     => 'Atelier 2',
-        'desc'      => 'Doc 1 — Document Word',
-        'doc_url'   => '#',
-        'doc_label' => 'Voir Live',
-        'repo_url'  => '#',
+        'desc'      => 'Atelier 2 — Projet Deal',
+        'doc_url'   => 'Doc1.pdf',
+        'doc_label' => 'Voir Document',
+        'repo_url'  => 'https://github.com/amallechhab/Deal-App',
+        'jira_url'  => 'https://ikhlasbenben0709.atlassian.net/jira/software/projects/DEAL/boards/36/backlog',
+        'figma_url' => 'https://www.figma.com/design/zwM3FU6erOokjjrCST4mK2/Deal?node-id=0-1&p=f&t=cffMicxRlI8ZxmZu-0',
+        'site_url'  => 'https://dealappamallechhab.vercel.app/',
     ],
     [
         'title'     => 'Atelier 3',
-        'desc'      => 'Atelier 3',
-        'doc_url'   => '#',
-        'doc_label' => 'Voir Live',
-        'repo_url'  => '#',
+        'desc'      => 'Atelier 3 — Document Word',
+        'doc_url'   => 'Atelier%203.pdf',
+        'doc_label' => 'Voir Document',
+        'repo_url'  => 'YOUR_GITHUB_LINK_3',
     ],
     [
         'title'     => 'Atelier 4',
-        'desc'      => 'Atelier 4',
-        'doc_url'   => '#',
-        'doc_label' => 'Voir Live',
-        'repo_url'  => '#',
+        'desc'      => 'Atelier 4 — Document Word',
+        'doc_url'   => 'Atelier%204.pdf',
+        'doc_label' => 'Voir Document',
+        'repo_url'  => 'YOUR_GITHUB_LINK_4',
     ],
 ];
 
@@ -49,16 +52,20 @@ function e(string $value): string
     return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title><?= e($siteName) ?> — Portfolio</title>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet" />
+
     <style>
         :root {
             --bg-main: #fdfaf8;
@@ -246,6 +253,7 @@ function e(string $value): string
             display: flex;
             justify-content: center;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         .project-links a {
@@ -327,12 +335,16 @@ function e(string $value): string
 </head>
 
 <body>
+
     <!-- NAVIGATION -->
     <nav>
         <a href="#home" class="logo"><?= e($siteName) ?></a>
+
         <ul class="nav-links">
             <?php foreach ($navLinks as $href => $label): ?>
-                <li><a href="<?= e($href) ?>"><?= e($label) ?></a></li>
+                <li>
+                    <a href="<?= e($href) ?>"><?= e($label) ?></a>
+                </li>
             <?php endforeach; ?>
         </ul>
     </nav>
@@ -340,46 +352,72 @@ function e(string $value): string
     <!-- HOME -->
     <section id="home">
         <div class="hero-container">
+
             <div class="hero-image-placeholder">
                 <img src="<?= e($photo) ?>" alt="<?= e($siteName) ?>">
             </div>
+
             <div class="hero-content">
                 <h1><?= e($siteName) ?></h1>
+
                 <p>
                     Développeuse web passionnée par le design épuré
                     et les expériences utilisateur élégantes.
                 </p>
+
                 <a href="#contact" class="btn-contact">Me contacter</a>
             </div>
+
         </div>
     </section>
 
     <!-- PROJECTS -->
     <section id="projects">
+
         <h2 class="section-title reveal">Mes Ateliers</h2>
+
         <div class="projects-grid">
+
             <?php foreach ($ateliers as $atelier): ?>
+
                 <div class="project-card reveal">
+
                     <h3><?= e($atelier['title']) ?></h3>
+
                     <p><?= e($atelier['desc']) ?></p>
+
                     <div class="project-links">
+
                         <?php if ($atelier['doc_url'] !== ''): ?>
-                            <a href="<?= e($atelier['doc_url']) ?>" target="_blank" rel="noopener">
+                            <a href="<?= e($atelier['doc_url']) ?>"
+                               target="_blank"
+                               rel="noopener">
                                 <?= e($atelier['doc_label']) ?>
                             </a>
                         <?php endif; ?>
+
                         <?php if ($atelier['repo_url'] !== ''): ?>
-                            <a href="<?= e($atelier['repo_url']) ?>" target="_blank" rel="noopener">GitHub</a>
+                            <a href="<?= e($atelier['repo_url']) ?>"
+                               target="_blank"
+                               rel="noopener">
+                                Voir lien GitHub
+                            </a>
                         <?php endif; ?>
+
                     </div>
+
                 </div>
+
             <?php endforeach; ?>
+
         </div>
     </section>
 
     <!-- ABOUT -->
     <section id="about" class="reveal">
+
         <h2 class="section-title">À propos</h2>
+
         <div class="about-text">
             <p>
                 Étudiante passionnée par le monde digital,
@@ -388,18 +426,24 @@ function e(string $value): string
                 Spécialisée en HTML, CSS, JavaScript et PHP.
             </p>
         </div>
+
     </section>
 
     <!-- CONTACT -->
     <section id="contact" class="reveal">
+
         <h2 class="section-title">Contact</h2>
+
         <div class="about-text">
             <p>
                 Vous pouvez me contacter pour discuter
                 d'un projet ou d'une collaboration.<br><br>
-                Mon email : <a href="mailto:<?= e($email) ?>"><?= e($email) ?></a>
+
+                Mon email :
+                <a href="mailto:<?= e($email) ?>"><?= e($email) ?></a>
             </p>
         </div>
+
     </section>
 
     <!-- FOOTER -->
@@ -411,18 +455,21 @@ function e(string $value): string
     <script>
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
+
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
                 var elementTop = reveals[i].getBoundingClientRect().top;
                 var elementVisible = 150;
+
                 if (elementTop < windowHeight - elementVisible) {
                     reveals[i].classList.add("active");
                 }
             }
         }
+
         window.addEventListener("scroll", reveal);
         reveal();
     </script>
-</body>
 
+</body>
 </html>
