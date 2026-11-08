@@ -57,7 +57,7 @@ $ateliers = [
     6 => [
         'title' => 'Atelier 6',
         'desc' => 'Inscription et liste des stagiaires — PHP, MySQL Aiven et Cloudinary',
-        'site_url' => 'atelier6/index.html',
+        'site_url' => 'https://portsite-indol.vercel.app/atelier6/index.html',
         'site_label' => 'Ouvrir Atelier 6',
     ],
     7 => [
