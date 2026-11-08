@@ -1,0 +1,94 @@
+stages:
+  - quality
+  - security
+  - deploy
+
+variables:
+  GIT_DEPTH: "0"
+  SONAR_USER_HOME: "$CI_PROJECT_DIR/.sonar"
+  SONAR_PROJECT_KEY: "REPLACE_WITH_YOUR_SONAR_PROJECT_KEY"
+
+syntax-check:
+  stage: quality
+  image: node:22-alpine
+  script:
+    - node --check script.js
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+sonarqube-check:
+  stage: quality
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  script:
+    - sonar-scanner -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.token="$SONAR_TOKEN" -Dsonar.qualitygate.wait=true
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+security-check:
+  stage: security
+  image: node:22-alpine
+  script:
+    - |
+      node --input-type=module <<'NODE'
+      const base = process.env.SONAR_HOST_URL;
+      const token = process.env.SONAR_TOKEN;
+      const project = process.env.SONAR_PROJECT_KEY;
+      const branch = process.env.CI_DEFAULT_BRANCH;
+
+      if (!base || !token || !project || !branch) {
+        console.error("Missing SonarQube Cloud CI/CD variables.");
+        process.exit(1);
+      }
+
+      const auth = "Basic " + Buffer.from(token + ":").toString("base64");
+
+      async function getSonarJson(url) {
+        const response = await fetch(url, { headers: { Authorization: auth } });
+        if (!response.ok) {
+          throw new Error("SonarCloud API returned " + response.status);
+        }
+        return response.json();
+      }
+
+      const issuesUrl = new URL("/api/issues/search", base);
+      issuesUrl.searchParams.set("componentKeys", project);
+      issuesUrl.searchParams.set("branch", branch);
+      issuesUrl.searchParams.set("types", "VULNERABILITY");
+      issuesUrl.searchParams.set("resolved", "false");
+      issuesUrl.searchParams.set("ps", "1");
+
+      const issues = await getSonarJson(issuesUrl);
+      const vulnerabilities = issues.paging?.total ?? 0;
+      console.log("Open vulnerabilities: " + vulnerabilities);
+
+      const hotspotsUrl = new URL("/api/hotspots/search", base);
+      hotspotsUrl.searchParams.set("projectKey", project);
+      hotspotsUrl.searchParams.set("branch", branch);
+      hotspotsUrl.searchParams.set("status", "TO_REVIEW");
+      hotspotsUrl.searchParams.set("ps", "1");
+
+      const hotspots = await getSonarJson(hotspotsUrl);
+      const hotspotsToReview = hotspots.paging?.total ?? 0;
+      console.log("Hotspots awaiting review: " + hotspotsToReview);
+
+      if (vulnerabilities > 0 || hotspotsToReview > 0) {
+        console.error("SonarQube Cloud found security findings that need attention.");
+        process.exitCode = 1;
+      }
+      NODE
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+deploy-pages:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - mkdir -p public
+    - cp index.html style.css script.js public/
+    - test -s public/index.html
+  pages:
+    publish: public
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'

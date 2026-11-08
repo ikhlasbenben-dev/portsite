@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7ff">
+  <title>Atelier 7 | GitLab CI/CD + SonarQube Cloud</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../index.php#projects"><span class="brand-mark">07</span> ATELIER / QUALITY LAB</a>
+    <span class="version"><span class="status-dot"></span> V1 · CODE CORRECT</span>
+  </header>
+
+  <main class="layout">
+    <section class="intro">
+      <p class="eyebrow">GITLAB CI/CD <span>×</span> SONARQUBE CLOUD</p>
+      <h1>La qualité<br>avant la <em>livraison.</em></h1>
+      <p class="lead">Un mini-site, un pipeline automatisé et une analyse de code. À chaque push, GitLab lance SonarQube, puis publie le site si le Quality Gate passe.</p>
+
+      <div class="pipeline" aria-label="Étapes du pipeline">
+        <div><span>01</span><b>Push GitLab</b></div>
+        <i aria-hidden="true">→</i>
+        <div><span>02</span><b>Analyse SonarQube</b></div>
+        <i aria-hidden="true">→</i>
+        <div><span>03</span><b>GitLab Pages</b></div>
+      </div>
+
+      <p class="note"><span>●</span> Cette version est volontairement saine. La V2 vulnérable est gardée séparément pour l’exercice SonarQube.</p>
+    </section>
+
+    <section class="demo" aria-labelledby="demo-title">
+      <div class="window-bar"><span></span><span></span><span></span><small>atelier-sonarqube</small></div>
+      <div class="demo-content">
+        <div class="demo-top"><span class="tag">V1 / DEMO</span><span class="check">PIPELINE · À CONFIGURER</span></div>
+        <p class="demo-label">MINI-PROJET</p>
+        <h2 id="demo-title">Atelier GitLab CI/CD</h2>
+        <p id="message" class="message" aria-live="polite">Version 1 : code correct</p>
+        <button id="btn" type="button">Cliquer ici <span aria-hidden="true">↗</span></button>
+        <div class="job-list">
+          <div><span class="job-icon">01</span><span>sonarqube-check</span><small>quality</small></div>
+          <div><span class="job-icon">02</span><span>deploy-pages</span><small>deploy</small></div>
+        </div>
+      </div>
+      <div class="demo-foot"><span>main</span><span>2 jobs · aucune étape de test en V1</span></div>
+    </section>
+  </main>
+
+  <footer><a href="../index.php#projects">← Retour au portfolio</a><span>Atelier 7 · GitLab CI/CD + SonarQube Cloud</span></footer>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff6f2">
+  <title>Atelier GitLab CI/CD | V2</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card">
+    <p class="eyebrow">ATELIER GITLAB CI/CD · V2</p>
+    <h1>Démo d'injection XSS</h1>
+    <p class="warning"><strong>Laboratoire isolé.</strong> Cette version est volontairement vulnérable. N'y saisis aucune donnée personnelle.</p>
+    <p>Entre un texte pour l'afficher dans la page :</p>
+    <form id="demo-form">
+      <label for="user-input">Votre saisie</label>
+      <input id="user-input" name="message" type="text" autocomplete="off">
+      <button type="submit">Afficher le texte</button>
+    </form>
+    <p id="message" aria-live="polite"></p>
+    <a href="../index.html">Retour à la V1 correcte</a>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

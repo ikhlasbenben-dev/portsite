@@ -59,8 +59,9 @@ $ateliers = [
     ],
     7 => [
         'title' => 'Atelier 7',
-        'desc' => 'Atelier 7',
-        'site_button_pending' => true,
+        'desc' => 'GitLab CI/CD et analyse de qualité SonarQube Cloud',
+        'site_url' => 'https://portsite-indol.vercel.app/atelier7/index.html',
+        'site_label' => 'Ouvrir Atelier 7',
     ],
 ];
 

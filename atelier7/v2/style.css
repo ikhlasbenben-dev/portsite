@@ -1,0 +1,13 @@
+:root { font-family: Inter, "Segoe UI", Arial, sans-serif; color: #282533; background: #fff6f2; }
+* { box-sizing: border-box; }
+body { min-height: 100vh; margin: 0; padding: 32px 18px; display: grid; place-items: center; }
+.card { width: min(100%, 520px); padding: clamp(25px, 6vw, 42px); border: 1px solid #f0d9d3; border-radius: 16px; background: #fff; box-shadow: 0 24px 65px #7f332014; }
+.eyebrow { color: #bb503a; font-size: 10px; font-weight: 800; letter-spacing: 1.8px; }
+h1 { margin: 16px 0 12px; font-size: clamp(30px, 7vw, 42px); letter-spacing: -1.5px; }
+.warning { padding: 12px 14px; border-left: 3px solid #d86a50; background: #fff2ed; color: #74443a; font-size: 13px; line-height: 1.6; }
+.card > p:not(.eyebrow):not(.warning) { color: #6e6977; font-size: 14px; line-height: 1.7; }
+label { display: block; margin: 22px 0 8px; font-size: 13px; font-weight: 700; }
+input { width: 100%; height: 46px; padding: 0 12px; border: 1px solid #dfdce5; border-radius: 7px; font: inherit; }
+button { width: 100%; margin-top: 12px; padding: 13px; border: 0; border-radius: 7px; background: #bb503a; color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+#message { min-height: 20px; overflow-wrap: anywhere; color: #36313e; }
+a { display: inline-block; margin-top: 12px; color: #a34130; font-size: 13px; font-weight: 700; }
