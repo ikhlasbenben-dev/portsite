@@ -25,7 +25,10 @@
       const button = form.querySelector('button'); button.disabled = true;
       try {
         const response = await fetch('/api/inscrire.php', { method: 'POST', body: new FormData(form) });
-        const result = await response.json(); if (!response.ok || !result.success) throw new Error(result.message || 'Une erreur est survenue.');
+        const body = await response.text();
+        let result;
+        try { result = JSON.parse(body); } catch { throw new Error('Le serveur a renvoyé une réponse invalide. Réessayez plus tard.'); }
+        if (!response.ok || !result.success) throw new Error(result.message || 'Une erreur est survenue.');
         feedback.textContent = result.message; feedback.className = 'success'; form.reset();
       } catch (error) { feedback.textContent = error.message; feedback.className = 'error'; }
       finally { button.disabled = false; }

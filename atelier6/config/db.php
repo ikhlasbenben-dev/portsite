@@ -20,7 +20,12 @@ function getDatabase(): PDO
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
     ];
-    $caPath = getenv('DB_SSL_CA') ?: dirname(__DIR__, 2) . '/certs/ca.pem';
+    $projectRoot = dirname(__DIR__, 2);
+    $caPath = getenv('DB_SSL_CA') ?: 'certs/ca.pem';
+    // Resolve relative paths from the deployed project root, not the function's working directory.
+    if ($caPath[0] !== '/') {
+        $caPath = $projectRoot . '/' . ltrim($caPath, '/\\');
+    }
     if (!is_file($caPath)) {
         throw new RuntimeException('Certificat CA Aiven introuvable. Ajoutez certs/ca.pem et configurez DB_SSL_CA.');
     }
