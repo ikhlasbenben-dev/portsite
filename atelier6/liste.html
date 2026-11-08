@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stagiaires | Atelier 6</title><link rel="stylesheet" href="style.css"></head>
+<body>
+  <header class="topbar"><a href="index.html" class="back">← Inscription</a><span>Atelier 06 · Quick Annonces</span><button class="refresh" id="refresh">Actualiser ↻</button></header>
+  <main class="directory"><div class="directory-title"><div><p class="eyebrow">LA PROMOTION</p><h1>Nos stagiaires<span>.</span></h1></div><a class="action" href="index.html">+ Ajouter un profil</a></div><p id="status" role="status" aria-live="polite">Chargement des profils…</p><section id="cards" class="cards" aria-label="Liste des stagiaires"></section></main>
+  <script>
+    const cards = document.querySelector('#cards'), status = document.querySelector('#status');
+    async function load() {
+      status.textContent = 'Chargement des profils…'; cards.replaceChildren();
+      try {
+        const response = await fetch('api/liste.php', { cache: 'no-store' }), data = await response.json();
+        if (!response.ok || !data.success) throw new Error(data.message || 'Impossible de charger la liste.');
+        status.textContent = data.stagiaires.length ? `${data.stagiaires.length} profil${data.stagiaires.length > 1 ? 's' : ''} inscrit${data.stagiaires.length > 1 ? 's' : ''}` : 'Aucun profil pour le moment.';
+        for (const person of data.stagiaires) {
+          const card = document.createElement('article'); card.className = 'person';
+          const image = document.createElement('img'); image.src = person.photo; image.alt = `Photo de ${person.prenom} ${person.nom}`; image.loading = 'lazy';
+          const details = document.createElement('div'), name = document.createElement('h2'), city = document.createElement('p');
+          name.textContent = `${person.prenom} ${person.nom}`; city.textContent = person.ville; details.append(name, city); card.append(image, details); cards.append(card);
+        }
+      } catch (error) { status.textContent = error.message; status.className = 'error'; }
+    }
+    document.querySelector('#refresh').addEventListener('click', load); load();
+  </script>
+</body>
+</html>

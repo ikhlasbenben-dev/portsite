@@ -11,40 +11,6 @@ $navLinks = [
     '#contact'  => 'Contact',
 ];
 
-// ---------- ATELIERS ----------
-<<<<<<< HEAD
-$ateliers = [
-    [
-        'title'     => 'Atelier 1',
-        'desc'      => 'Atelier 1 — Document Word',
-        'doc_url'   => 'Atelier%201.pdf',
-        'doc_label' => 'Voir Document',
-        'repo_url'  => 'YOUR_GITHUB_LINK_1',
-    ],
-    [
-        'title'     => 'Atelier 2',
-        'desc'      => 'Atelier 2 — Projet Deal',
-        'doc_url'   => 'Doc1.pdf',
-        'doc_label' => 'Voir Document',
-        'repo_url'  => 'https://github.com/amallechhab/Deal-App',
-        'jira_url'  => 'https://ikhlasbenben0709.atlassian.net/jira/software/projects/DEAL/boards/36/backlog',
-        'figma_url' => 'https://www.figma.com/design/zwM3FU6erOokjjrCST4mK2/Deal?node-id=0-1&p=f&t=cffMicxRlI8ZxmZu-0',
-        'site_url'  => 'https://dealappamallechhab.vercel.app/',
-    ],
-    [
-        'title'     => 'Atelier 3',
-        'desc'      => 'Atelier 3 — Document Word',
-        'doc_url'   => 'Atelier%203.pdf',
-        'doc_label' => 'Voir Document',
-        'repo_url'  => 'YOUR_GITHUB_LINK_3',
-    ],
-    [
-        'title'     => 'Atelier 4',
-        'desc'      => 'Atelier 4 — Document Word',
-        'doc_url'   => 'Atelier%204.pdf',
-        'doc_label' => 'Voir Document',
-        'repo_url'  => 'YOUR_GITHUB_LINK_4',
-=======
 // Each atelier can contain photo folders, a website URL, or both.
 $ateliers = [
     1 => [
@@ -90,14 +56,14 @@ $ateliers = [
     ],
     6 => [
         'title' => 'Atelier 6',
-        'desc' => 'Atelier 6',
-        'site_button_pending' => true,
+        'desc' => 'Inscription et liste des stagiaires — PHP, MySQL Aiven et Cloudinary',
+        'site_url' => 'atelier6/index.html',
+        'site_label' => 'Ouvrir Atelier 6',
     ],
     7 => [
         'title' => 'Atelier 7',
         'desc' => 'Atelier 7',
         'site_button_pending' => true,
->>>>>>> 6c961ba (Update website)
     ],
 ];
 
@@ -546,11 +512,7 @@ function renderGalleryButton(string $label, string $folder, string $id): void
 
         <div class="projects-grid">
 
-<<<<<<< HEAD
-            <?php foreach ($ateliers as $atelier): ?>
-=======
             <?php foreach ($ateliers as $number => $atelier): ?>
->>>>>>> 6c961ba (Update website)
 
                 <div class="project-card reveal">
 
@@ -560,11 +522,7 @@ function renderGalleryButton(string $label, string $folder, string $id): void
 
                     <div class="project-links">
 
-<<<<<<< HEAD
-                        <?php if ($atelier['doc_url'] !== ''): ?>
-=======
                         <?php if (!empty($atelier['doc_url'])): ?>
->>>>>>> 6c961ba (Update website)
                             <a href="<?= e($atelier['doc_url']) ?>"
                                target="_blank"
                                rel="noopener">
@@ -572,11 +530,7 @@ function renderGalleryButton(string $label, string $folder, string $id): void
                             </a>
                         <?php endif; ?>
 
-<<<<<<< HEAD
-                        <?php if ($atelier['repo_url'] !== ''): ?>
-=======
                         <?php if (!empty($atelier['repo_url'])): ?>
->>>>>>> 6c961ba (Update website)
                             <a href="<?= e($atelier['repo_url']) ?>"
                                target="_blank"
                                rel="noopener">
@@ -584,8 +538,6 @@ function renderGalleryButton(string $label, string $folder, string $id): void
                             </a>
                         <?php endif; ?>
 
-<<<<<<< HEAD
-=======
                         <?php foreach (['jira_url' => 'Voir Jira', 'figma_url' => 'Voir Figma', 'site_url' => ($atelier['site_label'] ?? 'Voir site'), 'url' => 'Visiter le site ↗'] as $urlKey => $urlLabel): ?>
                             <?php if (!empty($atelier[$urlKey])): ?>
                                 <a href="<?= e($atelier[$urlKey]) ?>" target="_blank" rel="noopener">
@@ -608,7 +560,6 @@ function renderGalleryButton(string $label, string $folder, string $id): void
                             ?>
                         <?php endforeach; ?>
 
->>>>>>> 6c961ba (Update website)
                     </div>
 
                 </div>
@@ -686,8 +637,4 @@ function renderGalleryButton(string $label, string $folder, string $id): void
     </script>
 
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 6c961ba (Update website)

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f8f3ee"><title>Inscription | Atelier 6</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar"><a href="../index.php" class="back">← Portfolio</a><span>Atelier 06 · Quick Annonces</span><a href="liste.html">Liste des stagiaires →</a></header>
+  <main class="layout">
+    <section class="intro"><p class="eyebrow">AIVEN × CLOUDINARY</p><h1>Inscription<br><em>stagiaire.</em></h1><p>Ajoutez votre profil à la promotion. La photo est hébergée sur Cloudinary et les informations sont enregistrées dans MySQL.</p><div class="steps"><span>01 <b>Vos informations</b></span><span>02 <b>Votre photo</b></span><span>03 <b>Inscription</b></span></div></section>
+    <form id="signup" class="panel" enctype="multipart/form-data">
+      <div class="panel-head"><div><p class="eyebrow">NOUVEAU PROFIL</p><h2>Vos informations</h2></div><span class="badge">Formulaire</span></div>
+      <label>Nom<input name="nom" autocomplete="family-name" maxlength="100" required placeholder="Ex. El Amrani"></label>
+      <label>Prénom<input name="prenom" autocomplete="given-name" maxlength="100" required placeholder="Ex. Sara"></label>
+      <label>Ville<input name="ville" autocomplete="address-level2" maxlength="100" required placeholder="Ex. Casablanca"></label>
+      <label class="upload">Photo de profil<input name="photo" type="file" accept="image/jpeg,image/png,image/webp" required><small>JPG, PNG ou WEBP · 5 Mo maximum</small></label>
+      <button type="submit">Enregistrer mon inscription <span>↗</span></button><p id="feedback" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+  <script>
+    const form = document.querySelector('#signup'), feedback = document.querySelector('#feedback');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault(); feedback.textContent = 'Envoi en cours…'; feedback.className = '';
+      const button = form.querySelector('button'); button.disabled = true;
+      try {
+        const response = await fetch('api/inscrire.php', { method: 'POST', body: new FormData(form) });
+        const result = await response.json(); if (!response.ok || !result.success) throw new Error(result.message || 'Une erreur est survenue.');
+        feedback.textContent = result.message; feedback.className = 'success'; form.reset();
+      } catch (error) { feedback.textContent = error.message; feedback.className = 'error'; }
+      finally { button.disabled = false; }
+    });
+  </script>
+</body>
+</html>
