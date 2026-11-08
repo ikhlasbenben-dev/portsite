@@ -40,10 +40,7 @@ $ateliers = [
     ],
     4 => [
         'title' => 'Atelier 4',
-        'desc' => 'Atelier 4 — Document Word',
-        'doc_url' => 'Atelier%204.pdf',
-        'doc_label' => 'Voir Document',
-        'repo_url' => '',
+        'desc' => 'Application web Deal',
         'site_url' => 'https://dealappamallechhab.vercel.app/',
         'site_label' => 'Site Web Deal',
     ],
