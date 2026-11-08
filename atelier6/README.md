@@ -20,5 +20,5 @@ Le dépôt est prévu pour servir la page portfolio et les fichiers Atelier 6. L
 
 - `index.html` : formulaire d'inscription.
 - `liste.html` : annuaire des profils.
-- `api/inscrire.php` : validation, upload Cloudinary et insertion MySQL.
-- `api/liste.php` : lecture des profils depuis MySQL.
+- `../api/inscrire.php` : validation, upload Cloudinary et insertion MySQL.
+- `../api/liste.php` : lecture des profils depuis MySQL.

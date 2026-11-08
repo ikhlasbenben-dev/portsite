@@ -9,7 +9,7 @@
     async function load() {
       status.textContent = 'Chargement des profils…'; cards.replaceChildren();
       try {
-        const response = await fetch('api/liste.php', { cache: 'no-store' }), data = await response.json();
+        const response = await fetch('/api/liste.php', { cache: 'no-store' }), data = await response.json();
         if (!response.ok || !data.success) throw new Error(data.message || 'Impossible de charger la liste.');
         status.textContent = data.stagiaires.length ? `${data.stagiaires.length} profil${data.stagiaires.length > 1 ? 's' : ''} inscrit${data.stagiaires.length > 1 ? 's' : ''}` : 'Aucun profil pour le moment.';
         for (const person of data.stagiaires) {

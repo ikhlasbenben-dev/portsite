@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/../config/common.php';
+require_once __DIR__ . '/../atelier6/config/common.php';
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     jsonResponse(['success' => false, 'message' => 'Méthode non autorisée.'], 405);
 }

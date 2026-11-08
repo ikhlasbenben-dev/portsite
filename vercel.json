@@ -1,6 +1,6 @@
 {
   "functions": {
-    "atelier6/api/*.php": {
+    "api/*.php": {
       "runtime": "vercel-php@0.9.0"
     },
     "*.php": {
