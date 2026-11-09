@@ -19,7 +19,6 @@ $ateliers = [
         'doc_url' => 'Atelier%201.pdf',
         'doc_label' => 'Voir Document',
         'repo_url' => '',
-        'folders' => ['Dossier 2', 'Dossier 3 (AdvancedEventSolution)'],
     ],
     2 => [
         'title' => 'Atelier 2',
@@ -28,7 +27,6 @@ $ateliers = [
         'doc_label' => 'Voir Document',
         'jira_url' => 'https://ikhlasbenben0709.atlassian.net/jira/software/projects/DEAL/boards/36/backlog',
         'figma_url' => 'https://www.figma.com/design/zwM3FU6erOokjjrCST4mK2/Deal?node-id=0-1&p=f&t=cffMicxRlI8ZxmZu-0',
-        'folders' => ['Partie 1', 'Partie 2'],
     ],
     3 => [
         'title' => 'Atelier 3',
@@ -36,7 +34,6 @@ $ateliers = [
         'doc_url' => 'Atelier%203.pdf',
         'doc_label' => 'Voir Document',
         'repo_url' => '',
-        'folders' => [''],
     ],
     4 => [
         'title' => 'Atelier 4',
@@ -49,7 +46,6 @@ $ateliers = [
         'desc' => 'Atelier 5',
         'doc_url' => 'Atelier%205.pdf',
         'doc_label' => 'Voir Document',
-        'folders' => ['Partie 2', 'Partie 3'],
     ],
     6 => [
         'title' => 'Atelier 6',
