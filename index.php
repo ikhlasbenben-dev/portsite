@@ -44,7 +44,7 @@ $ateliers = [
     5 => [
         'title' => 'Atelier 5',
         'desc' => 'Atelier 5',
-        'doc_url' => 'Atelier%205.pdf',
+        'doc_url' => 'at5.pdf',
         'doc_label' => 'Voir Document',
     ],
     6 => [
