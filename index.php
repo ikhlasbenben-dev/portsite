@@ -60,6 +60,8 @@ $ateliers = [
     7 => [
         'title' => 'Atelier 7',
         'desc' => 'GitLab CI/CD et analyse de qualité SonarQube Cloud',
+        'repo_url' => 'https://gitlab.com/ikhlasbenben-dev/atelier-sonarqube',
+        'repo_label' => 'Voir le projet GitLab',
         'site_url' => 'https://portsite-indol.vercel.app/atelier7/index.html',
         'site_label' => 'Ouvrir Atelier 7',
     ],
@@ -532,7 +534,7 @@ function renderGalleryButton(string $label, string $folder, string $id): void
                             <a href="<?= e($atelier['repo_url']) ?>"
                                target="_blank"
                                rel="noopener">
-                                Voir lien GitHub
+                                <?= e($atelier['repo_label'] ?? 'Voir lien GitHub') ?>
                             </a>
                         <?php endif; ?>
 
