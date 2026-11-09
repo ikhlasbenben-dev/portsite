@@ -31,7 +31,7 @@ $ateliers = [
     3 => [
         'title' => 'Atelier 3',
         'desc' => 'Atelier 3 — Document Word',
-        'doc_url' => 'Atelier%203.pdf',
+        'doc_url' => 'atelier3.pdf',
         'doc_label' => 'Voir Document',
         'repo_url' => '',
     ],
